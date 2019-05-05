@@ -36,6 +36,33 @@
 /*
 http://ws.kcd.im/?ws=Testing&e=basic%20react%20test&em=
 */
+
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ItemList from '../item-list'
+
+test('renders no item with no items are given', () => {
+  const noItemString = 'no items'
+  const container = document.createElement('div')
+
+  ReactDOM.render(<ItemList items={[]} />, container)
+
+  // but this is fragile because test would break if there's a span or h1 around
+  // expect(container.innerHTML).toBe(noItemString)
+
+  expect(container.textContent).toMatch(noItemString)
+})
+
+test('renders items given', () => {
+  const container = document.createElement('div')
+  const elementList = ['apple', 'orange', 'pear']
+
+  ReactDOM.render(<ItemList items={elementList} />, container)
+  for (let elementString of elementList) {
+    expect(container.textContent).toMatch(elementString)
+  }
+})
+
 test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
   expect(submitted).toBe(true)
